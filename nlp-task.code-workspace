@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "${workspaceFolder}/venv"
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "vscodevim.vim"
+    ]
+  }
+}
