@@ -1,6 +1,7 @@
 # For Jupyter
 ipykernel==6.21.0
 matplotlib==3.6.3
+tqdm==4.64.1
 
 # For doing data
 transformers==4.26.1
