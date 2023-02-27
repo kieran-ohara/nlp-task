@@ -1,0 +1,13 @@
+version: '3'
+services:
+  train:
+    build:
+      context: .
+      dockerfile: Dockerfile.train
+    image: sagemaker-dvc
+    volumes:
+      - ./:/opt/model/input/data/training
+    environment:
+      SM_MODEL_DIR: /opt/ml/model
+      SM_CHANNELS: '{"training": "/opt/model/input/data/training"}'
+    command: python train.py

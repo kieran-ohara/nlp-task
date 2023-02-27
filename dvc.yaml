@@ -1,3 +1,3 @@
 stages:
-  train: 
-    cmd: ./venv/bin/papermill notebooks/train-pytorch.ipynb outputs/completed-notebook.ipynb
+  train:
+    cmd: papermill notebooks/train-pytorch.ipynb outputs/completed-notebook.ipynb

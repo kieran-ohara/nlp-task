@@ -14,3 +14,5 @@ datasets==2.10.0
 
 # ops
 papermill==2.4.0
+dvc==2.45.1
+sh==2.0.2
