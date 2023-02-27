@@ -1,0 +1,4 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: ./venv/bin/papermill notebooks/train-pytorch.ipynb outputs/completed-notebook.ipynb

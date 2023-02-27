@@ -11,3 +11,6 @@ torchaudio==0.13.1
 
 # Datasets
 datasets==2.10.0
+
+# ops
+papermill==2.4.0
