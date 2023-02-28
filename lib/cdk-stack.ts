@@ -51,7 +51,8 @@ export class CdkStack extends cdk.Stack {
     bucket.grantReadWrite(stateMachine)
 
     new Pipeline(this, 'Pipeline', {
-      artifactBucket: bucket
+      artifactBucket: bucket,
+      trainingStateMachine: stateMachine
     })
   }
 }

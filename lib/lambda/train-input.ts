@@ -9,6 +9,7 @@ const ToS3 = (artifact: lambda.Artifact) => ({
   Key: artifact.location.s3Location.objectKey,
 })
 
+export const INPUT_FILENAME = 'state-machine-input.json';
 export const handler = async (event: lambda.CodePipelineEvent): Promise<any> => {
   try {
     const {AWS_REGION} = process.env;
@@ -29,7 +30,7 @@ export const handler = async (event: lambda.CodePipelineEvent): Promise<any> => 
     const {Bucket, Key} = ToS3(sourceArtifact)
     const zip = new jszip()
     zip.file(
-      'state-machine-input.json',
+      INPUT_FILENAME,
       JSON.stringify({
         S3Bucket: `s3://${Bucket}/${Key}`,
         JobName: jobId
@@ -53,3 +54,4 @@ export const handler = async (event: lambda.CodePipelineEvent): Promise<any> => 
     throw err
   }
 }
+

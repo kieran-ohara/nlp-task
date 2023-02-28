@@ -5,11 +5,15 @@ import * as lambda from "aws-cdk-lib/aws-lambda"
 import * as pipeline from "aws-cdk-lib/aws-codepipeline"
 import * as pipelineactions from "aws-cdk-lib/aws-codepipeline-actions"
 import * as s3 from "aws-cdk-lib/aws-s3"
+import * as stepfunctions from "aws-cdk-lib/aws-stepfunctions"
+
+import { INPUT_FILENAME } from '../lambda/train-input';
 
 import * as path from 'path'
 
 interface PipelineInterface {
   artifactBucket: s3.IBucket;
+  trainingStateMachine: stepfunctions.IStateMachine;
 }
 
 export class Pipeline extends Construct {
@@ -17,7 +21,7 @@ export class Pipeline extends Construct {
     super(scope, id);
     const {region, account} = cdk.Stack.of(this)
 
-    const { artifactBucket } = props;
+    const { artifactBucket, trainingStateMachine } = props;
 
     const sourceArtifact = new pipeline.Artifact('SourceArtifact');
     const trainInputArtifact = new pipeline.Artifact('TrainInputArtifact')
@@ -46,13 +50,22 @@ export class Pipeline extends Construct {
           ]
         },
         {
-          stageName: 'TrainInput',
+          stageName: 'Train',
           actions: [
             new pipelineactions.LambdaInvokeAction({
               actionName: 'TrainInput',
               inputs: [sourceArtifact],
               outputs: [trainInputArtifact],
-              lambda: trainInputLambda
+              lambda: trainInputLambda,
+              runOrder: 1
+            }),
+            new pipelineactions.StepFunctionInvokeAction({
+              actionName: 'Train',
+              stateMachine: trainingStateMachine,
+              stateMachineInput: pipelineactions.StateMachineInput.filePath(
+                trainInputArtifact.atPath(INPUT_FILENAME),
+              ),
+              runOrder: 2
             })
           ]
         }
