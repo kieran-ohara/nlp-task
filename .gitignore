@@ -1,4 +1,6 @@
+*.d.ts
 *.pyc
 cdk.out
+lib/lambda/dist
 outputs
 venv

@@ -1,11 +1,13 @@
-import * as path from 'path'
-
 import { Construct } from 'constructs';
-import * as cdk from 'aws-cdk-lib';
 
+import * as cdk from 'aws-cdk-lib';
 import * as s3 from "aws-cdk-lib/aws-s3"
 import * as sfn from "aws-cdk-lib/aws-stepfunctions"
 import * as tasks from "aws-cdk-lib/aws-stepfunctions-tasks"
+
+import { Pipeline } from "./constructs/pipeline";
+
+import * as path from 'path'
 
 export class CdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -47,5 +49,9 @@ export class CdkStack extends cdk.Stack {
     })
 
     bucket.grantReadWrite(stateMachine)
+
+    new Pipeline(this, 'Pipeline', {
+      artifactBucket: bucket
+    })
   }
 }
