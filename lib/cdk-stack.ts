@@ -1,6 +1,7 @@
 import { Construct } from 'constructs';
 
 import * as cdk from 'aws-cdk-lib';
+import * as ecrassets from 'aws-cdk-lib/aws-ecr-assets';
 import * as s3 from "aws-cdk-lib/aws-s3"
 import * as sfn from "aws-cdk-lib/aws-stepfunctions"
 import * as tasks from "aws-cdk-lib/aws-stepfunctions-tasks"
@@ -21,6 +22,7 @@ export class CdkStack extends cdk.Stack {
         trainingImage: tasks.DockerImage.fromAsset(this, 'Image', {
           directory: path.join(__dirname, '../'),
           file: 'Dockerfile.train',
+          platform:  ecrassets.Platform.LINUX_AMD64
         })
       },
       inputDataConfig: [{

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import ast
 import json
@@ -16,6 +18,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_dir', type=str, default=os.environ['SM_MODEL_DIR'])
     parser.add_argument('--channel_names', default=json.loads(os.environ['SM_CHANNELS']))
+    parser.add_argument('train', type=bool)
     args = parser.parse_args()
 
     logging.debug(args)

@@ -10,4 +10,4 @@ services:
     environment:
       SM_MODEL_DIR: /opt/ml/model
       SM_CHANNELS: '{"training": "/opt/model/input/data/training"}'
-    command: python train.py
+    command: train
